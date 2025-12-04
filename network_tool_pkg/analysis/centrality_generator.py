@@ -195,4 +195,4 @@ class CentralityCalculator :
       old_cen = new_cen
       iter_count += 1
 
-    return {nodes[i]: new_cen[i] for i in range(N)}
+    return new_cen
