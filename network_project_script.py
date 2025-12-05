@@ -91,6 +91,11 @@ er_global_list = []
 cf_global_list = []
 cl_global_list = []
 
+# 네트워크 시각화를 위한 degree 저장 리스트
+er_degree_list = []
+cf_degree_list = []
+cl_degree_list = []
+
 # ---------- 앙상블 시뮬레이션 시작 ----------
 
 print('----- {}회 앙상블 시뮬레이션 시작 -----'.format(NUM_SIMULATIONS))
@@ -191,9 +196,9 @@ print('----- Degree Histogram 시각화가 완료되었습니다 -----')
 fig, ax = plt.subplots(1, 1, figsize = (9, 5))
 
 ax.plot(nodes_sorted, original_btw_sorted, color = 'grey', label = 'Original')
-ax.plot(nodes_sorted, avg_er_btw, linstyle = '--', color = 'blue', label = 'ER')
-ax.plot(nodes_sorted, avg_cf_btw, linstyle = '--', color = 'red', label = 'Configuration')
-ax.plot(nodes_sorted, avg_cl_btw, linstyle = '--', color = 'green', label = 'Chung-Lu')
+ax.plot(nodes_sorted, avg_er_btw, linestyle = '--', color = 'blue', label = 'ER')
+ax.plot(nodes_sorted, avg_cf_btw, linestyle = '--', color = 'red', label = 'Configuration')
+ax.plot(nodes_sorted, avg_cl_btw, linestyle = '--', color = 'green', label = 'Chung-Lu')
 
 ax.set_title('Betweenness Centrality: Original vs Random Models')
 ax.set_xlabel('Node ID')
@@ -212,9 +217,9 @@ print('----- Betweenness Centrality 시각화가 완료되었습니다 -----')
 fig, ax = plt.subplots(1, 1, figsize = (9, 5))
 
 ax.plot(nodes_sorted, original_cls_sorted, color = 'grey', label = 'Original')
-ax.plot(nodes_sorted, avg_er_cls, linstyle = '--', color = 'blue', label = 'ER')
-ax.plot(nodes_sorted, avg_cf_cls, linstyle = '--', color = 'red', label = 'Configuration')
-ax.plot(nodes_sorted, avg_cl_cls, linstyle = '--', color = 'green', label = 'Chung-Lu')
+ax.plot(nodes_sorted, avg_er_cls, linestyle = '--', color = 'blue', label = 'ER')
+ax.plot(nodes_sorted, avg_cf_cls, linestyle = '--', color = 'red', label = 'Configuration')
+ax.plot(nodes_sorted, avg_cl_cls, linestyle = '--', color = 'green', label = 'Chung-Lu')
 
 ax.set_title('Closeness Centrality: Original vs Random Models')
 ax.set_xlabel('Node ID')
@@ -248,7 +253,7 @@ for i, metric in enumerate(metric_names) :
   y_vals = [original_vals[i], er_vals[i], cf_vals[i], cl_vals[i]]
 
   for j, (x,y) in enumerate(zip(x_pos, y_vals)) :
-    ax[i].scatter(x, y, color = color[j], s = 120)
+    ax[i].scatter(x, y, color = colors[j], s = 120)
     ax[i].text(x, y, '{:.2f}'.format(y), ha = 'center', va = 'center', fontsize = 6, color = 'white')
 
   ax[i].set_xticks(x_pos)
