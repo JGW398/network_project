@@ -122,6 +122,11 @@ for i in range(NUM_SIMULATIONS) :
   cf_global_list.append(calculate_global(G_cf))
   cl_global_list.append(calculate_global(G_cl))
 
+  # degree 저장
+  er_degree_list.append([d for _, d in G_er.degree()])
+  cf_degree_list.append([d for _, d in G_cf.degree()])
+  cl_degree_list.append([d for _, d in G_cl.degree()])
+
 print('----- {}회 앙상블 시뮬레이션 완료 -----'.format(NUM_SIMULATIONS))
 print('----- 3단계 : 원본 분포 계산 및 무작위 앙상블 생성이 완료되었습니다 -----')
 
@@ -163,7 +168,51 @@ print('----- 5단계 : 전역 지표 비교를 위한 계산이 완료되었습�
 # 6. 시각화
 # ====================================================================
 
+# ---------- 원본 네트워크 vs 랜덤 네트워크 모델 Degree Histogram 비교 ----------
 
+avg_er_hist = average_hist(er_degree_list)
+avg_cf_hist = average_hist(cf_degree_list)
+avg_cl_hist = average_hist(cl_degree_list)
+
+fig, ax = plt.subplots(1, 3, figsize = (18, 5))
+
+plot_degree_hist(ax[0], degrees_project, avg_er_hist, 'ER')
+plot_degree_hist(ax[1], degrees_project, avg_cf_hist, 'Configuration')
+plot_degree_hist(ax[2], degrees_project, avg_cl_hist, 'Chung-Lu')
+
+plt.tight_layout()
+plt.savefig('Degree_compare.pdf', bbox_inches = 'tight')
+plt.close()
+
+print('----- Degree Histogram 시각화가 완료되었습니다 -----')
+
+# ---------- Betweennes Centrality 비교 ----------
+
+fig, ax = plt.subplots(1, 1, figsize = (7, 5))
+
+ax.plot(nodes_sorted, original_btw_sorted, color = 'grey', label = 'Original')
+ax.plot(nodes_sorted, avg_er_btw, linstyle = '--', color = 'blue', label = 'ER')
+ax.plot(nodes_sorted, avg_cf_btw, linstyle = '--', color = 'red', label = 'Configuration')
+ax.plot(nodes_sorted, avg_cl_btw, linstyle = '--', color = 'green', label = 'Chung_Lu')
+
+ax.set_title('Betweenness Centrality: Original vs Random Models')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
 
 
 
