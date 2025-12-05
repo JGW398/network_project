@@ -137,7 +137,7 @@ class RandomNetGenerator:
     total_degree = sum(degree_sequence)
 
     if total_degree == 0 :
-      raise ValueError('데이터 오류입니다. 올바른 네트워크를 사용하세요.)
+      raise ValueError('데이터 오류입니다. 올바른 네트워크를 사용하세요.')
                        
     for i in range(n) :
       for j in range(i+1, n) :
