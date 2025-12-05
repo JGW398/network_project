@@ -9,6 +9,7 @@ from network_tool_pkg.utils.preprocessing import preprocess_network
 from network_tool_pkg.utils.degree_utils import create_degree_sequence, preprocess_stub
 from network_tool_pkg.utils.average_utils import ensemble_average
 from network_tool_pkg.utils.global_utils import calculate_global
+from network_tool_pkg.utils.plot_utils import plot_degree_hist
 
 # 중심성 및 랜덤 모델 생성 클래스
 from network_tool_pkg.analysis.centrality_generator import CentralityCalculator
