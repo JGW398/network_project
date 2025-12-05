@@ -131,7 +131,7 @@ print('----- {}회 앙상블 시뮬레이션 완료 -----'.format(NUM_SIMULATION
 print('----- 3단계 : 원본 분포 계산 및 무작위 앙상블 생성이 완료되었습니다 -----')
 
 # ====================================================================
-# 4. 중심성 지표 비교 (평균화 작업)
+# 4. 중심성 지표 계산 (평균화 작업)
 # ====================================================================
 
 nodes_sorted = sorted(G_project.nodes())
@@ -151,7 +151,7 @@ avg_cl_cls = ensemble_average(cl_cls_list)
 print('----- 4단계 : 중심성 지표 비교를 위한 앙상블 평균화가 완료되었습니다 -----')
 
 # ====================================================================
-# 5. 전역 지표 비교
+# 5. 전역 지표 계산
 # ====================================================================
 
 # 원본 네트워크의 전역 지표 계산
@@ -168,13 +168,13 @@ print('----- 5단계 : 전역 지표 비교를 위한 계산이 완료되었습�
 # 6. 시각화
 # ====================================================================
 
-# ---------- 원본 네트워크 vs 랜덤 네트워크 모델 Degree Histogram 비교 ----------
+# ---------- 원본 네트워크 vs 랜덤 네트워크 모델 Degree 비교 및 시각화 ----------
 
 avg_er_hist = average_hist(er_degree_list)
 avg_cf_hist = average_hist(cf_degree_list)
 avg_cl_hist = average_hist(cl_degree_list)
 
-fig, ax = plt.subplots(1, 3, figsize = (18, 5))
+fig, ax = plt.subplots(1, 3, figsize = (27, 5))
 
 plot_degree_hist(ax[0], degrees_project, avg_er_hist, 'ER')
 plot_degree_hist(ax[1], degrees_project, avg_cf_hist, 'Configuration')
@@ -186,27 +186,85 @@ plt.close()
 
 print('----- Degree Histogram 시각화가 완료되었습니다 -----')
 
-# ---------- Betweennes Centrality 비교 ----------
+# ---------- Betweennes Centrality 비교 및 시각화 ----------
 
-fig, ax = plt.subplots(1, 1, figsize = (7, 5))
+fig, ax = plt.subplots(1, 1, figsize = (9, 5))
 
 ax.plot(nodes_sorted, original_btw_sorted, color = 'grey', label = 'Original')
 ax.plot(nodes_sorted, avg_er_btw, linstyle = '--', color = 'blue', label = 'ER')
 ax.plot(nodes_sorted, avg_cf_btw, linstyle = '--', color = 'red', label = 'Configuration')
-ax.plot(nodes_sorted, avg_cl_btw, linstyle = '--', color = 'green', label = 'Chung_Lu')
+ax.plot(nodes_sorted, avg_cl_btw, linstyle = '--', color = 'green', label = 'Chung-Lu')
 
 ax.set_title('Betweenness Centrality: Original vs Random Models')
 ax.set_xlabel('Node ID')
 ax.set_ylabel('Betweenness Centrality')
-ax.
+ax.grid(alpha = 0.4)
+ax.legend()
 
+plt.tight_layout()
+plt.savefig('Betweenness_compare.pdf', bbox_inches = 'tight')
+plt.close()
 
+print('----- Betweenness Centrality 시각화가 완료되었습니다 -----')
 
+# ---------- Closeness Centrality 비교 및 시각화 ----------
 
+fig, ax = plt.subplots(1, 1, figsize = (9, 5))
 
+ax.plot(nodes_sorted, original_cls_sorted, color = 'grey', label = 'Original')
+ax.plot(nodes_sorted, avg_er_cls, linstyle = '--', color = 'blue', label = 'ER')
+ax.plot(nodes_sorted, avg_cf_cls, linstyle = '--', color = 'red', label = 'Configuration')
+ax.plot(nodes_sorted, avg_cl_cls, linstyle = '--', color = 'green', label = 'Chung-Lu')
 
+ax.set_title('Closeness Centrality: Original vs Random Models')
+ax.set_xlabel('Node ID')
+ax.set_ylabel('Closeness Centrality')
+ax.grid(alpha = 0.4)
+ax.legend()
 
+plt.tight_layout()
+plt.savefig('Closeness_compare.pdf', bbox_inches = 'tight')
+plt.close()
 
+print('----- Closeness Centrality 시각화가 완료되었습니다 -----')
+
+# ---------- 전역 지표 비교 및 시각화 ----------
+
+fig, ax = plt.subplots(1, 3, figsize = (9, 5))
+
+metric_names = list(original_global_metrics.keys())
+
+original_vals = [original_global_metrics[m] for m in metric_names]
+er_vals = [er_global_metrics[m] for m in metric_names]
+cf_vals = [cf_global_metrics[m] for m in metric_names]
+cl_vals = [cl_global_metrics[m] for m in metric_names]
+
+models = ['Original', 'ER', 'Config', 'Chung-Lu']
+colors = ['black', 'blue', 'red', 'green']
+x_single = 0
+
+for i, metric in enumerate(metric_names) :
+  x_pos = np.arange(len(models))
+  y_vals = [original_vals[i], er_vals[i], cf_vals[i], cl_vals[i]]
+
+  for j, (x,y) in enumerate(zip(x_pos, y_vals)) :
+    ax[i].scatter(x, y, color = color[j], s = 120)
+    ax[i].text(x, y, '{:.2f}'.format(y), ha = 'center', va = 'center', fontsize = 6, color = 'white')
+
+  ax[i].set_xticks(x_pos)
+  ax[i].set_xticklabels(models, rotation = 20)
+  ax[i].set_ylabel('{} value'.format(metric))
+  ax[i].set_title('{} Comparison'.format(metric))
+  ax[i].grid(alpha = 0.4)
+
+plt.tight_layout()
+plt.savefig('Global_compare.pdf', bbox_inches = 'tight')
+plt.close()
+
+print('----- 전역 지표(클러스터링 계수, 평균 경로 길이, 지름) 시각화가 완료되었습니다 -----')
+print('----- 6단계 : 해당 프로젝트의 최종 시각화가 완료되었습니다 -----')
+
+    
 
 
 
