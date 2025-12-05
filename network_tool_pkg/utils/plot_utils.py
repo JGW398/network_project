@@ -28,3 +28,13 @@ def plot_degree_hist(ax, original, model, model_name, bar_alpha = 0.35, original
   ax.set_title('Original vs {}'.format(model_name))
   ax.legend()
   ax.grid(alpha = 0.4)
+
+
+
+
+# -------------------- Degree 평균 히스토그램 계산을 위한 함수 --------------------
+def average_hist(degree_lists) :
+
+  max_degree = max(max(degree) for degree in degree_lists)
+
+  return np.mean([np.histogram(degree_list, bins = range(max_degree + 2), density = True)[0] for degree_list in degree_lists], axis = 0)
