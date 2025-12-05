@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 from network_tool_pkg.utils.preprocessing import preprocess_network
 from network_tool_pkg.utils.degree_utils import create_degree_sequence, preprocess_stub
 from network_tool_pkg.utils.average_utils import ensemble_average
+from network_tool_pkg.utils.global_utils import calculate_global
 
 # 중심성 및 랜덤 모델 생성 클래스
 from network_tool_pkg.analysis.centrality_generator import CentralityCalculator
@@ -81,6 +82,11 @@ er_cls_list = []
 cf_cls_list = []
 cl_cls_list = []
 
+# 네트워크 특징 비교를 위한 전역 지표 저장 리스트
+er_global_list = []
+cf_global_list = []
+cl_global_list = []
+
 # ---------- 앙상블 시뮬레이션 시작 ----------
 
 print('----- {}회 앙상블 시뮬레이션 시작 -----'.format(NUM_SIMULATIONS))
@@ -107,6 +113,11 @@ for i in range(NUM_SIMULATIONS) :
   cf_cls_list.append(calc_cf.calculate_closeness_centrality())
   cl_cls_list.append(calc_cl.calculate_closeness_centrality())
 
+  # 전역 지표 계산 및 저장
+  er_global_list.append(calculate_global(G_er))
+  cf_global_list.append(calculate_global(G_cf))
+  cl_global_list.append(calculate_global(G_cl))
+
 print('----- {}회 앙상블 시뮬레이션 완료 -----'.format(NUM_SIMULATIONS))
 print('----- 3단계 : 원본 분포 계산 및 무작위 앙상블 생성이 완료되었습니다 -----')
 
@@ -131,9 +142,21 @@ avg_cl_cls = ensemble_average(cl_cls_list)
 print('----- 4단계 : 중심성 지표 비교를 위한 앙상블 평균화가 완료되었습니다 -----')
 
 # ====================================================================
-# 5. 시각화
+# 5. 전역 지표 비교
 # ====================================================================
 
-# --------------------------------------------------------------------
-# 🌟 (이후 Closeness, Betweenness Centrality 비교 플롯 추가)
+# 원본 네트워크의 전역 지표 계산
+original_global_metrics = calculate_global(G_project)
+
+# 랜덤 모델 네트워크의 전역 지표 계산
+er_global_metrics = ensemble_average(er_global_list)
+cf_global_metrics = ensemble_average(cf_global_list)
+cl_global_metrics = ensemble_average(cl_global_list)
+
+
+
+# ====================================================================
+# 6. 시각화
+# ====================================================================
+
 
