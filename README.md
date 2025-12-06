@@ -1,4 +1,4 @@
-# 🕸️ 우간다 네트워크 구조 분석 및 랜덤 모델 비교 분석
+# 🕸️ 우간다 네트워크 구조 분석 및 랜덤 모델 비교 분석 🕸️
 
 본 프로젝트는 실제 **우간다 농촌 공동체(friendship) 네트워크 데이터**를 기반으로 실행합니다.
 
@@ -6,132 +6,297 @@
 - 실제 네트워크와 랜덤 네트워크 모델과의 비교
 - 구조가 **랜덤**인지, **메커니즘 기반 구조**인지를 검증
 
-사용된 랜덤 네트워크 모델
+# 
+
+랜덤 네트워크 모델
 
 - ### **ER (Erdős–Rényi) model** 
 - ### **Configuration model**
 - ### **Chung-Lu model**
 - ### **BA (Barabási–Albert) model**
 
-위의 모델별 앙상블 평균을 기반으로 **Degree 분포**, **Centrality 분포**, Global metrics(**클러스터링 계수, 평균 경로 길이, 지름**)를 분석합니다. 또, 랜덤 모델 생성 함수를 포함한 네트워크 전처리, 중심성 계산 등의 기능은 Python 클래스 형태로 관리됩니다.
+#
+
+본 프로젝트에서는 BA 랜덤 네트워크 모델을 제외한 나머지 세 모델을 이용합니다. 모델별 앙상블 평균을 기반으로 **Degree 분포**, **Centrality 분포**, Global metrics(**클러스터링 계수, 평균 경로 길이, 지름**)를 분석합니다. 또, 랜덤 모델 생성 함수를 포함한 네트워크 전처리, 중심성 계산 등의 기능은 Python 클래스 형태로 관리됩니다.
 
 ---
 
-# 📄 목차
+# 📄 목차 📄
 ### 1. [데이터 설명](#-데이터-설명)
 ### 2. [프로젝트 목표](#-프로젝트-목표)
 ### 3. [프로젝트 구조](#-프로젝트-구조)
-### 4. [패키지 구조 상세](#-패키지-구조-상세)
-### 5. [핵심 클래스 설명](#-핵심-클래스-설명)
-### 6. [유틸리티 함수 설명](#-유틸리티-함수-설명)
-### 7. [환경 설정 및 실행 방법](#-환경-설정-및-실행-방법)
-### 8. [핵심 분석 결과 설명](#-핵심-분석-결과-설명)
-### 9. [결론](#-결론)
+### 4. [핵심 클래스 설명](#-핵심-클래스-설명)
+### 5. [유틸리티 함수 설명](#-유틸리티-함수-설명)
+### 6. [환경 설정 및 실행 방법](#-환경-설정-및-실행-방법)
+### 7. [핵심 분석 결과](#-핵심-분석-결과)
+### 8. [결론](#-결론)
 
 
 ---
 
-# 🇺🇬 데이터 설명
+# 🇺🇬 데이터 설명 🇺🇬
 
 본 연구에 사용된 데이터는 **2013년 우간다 마유지 구의 빅토리아 호수에 인접한 17개 농촌 마을의 친구 관계 네트워크**입니다.
 
 출처 (Cambridge Repository) :
 https://www.repository.cam.ac.uk/items/a9c9afcc-20e0-4466-8b0b-151cfd26f1a2 
 
-### 네트워크 구성
+#
 
-# Uganda 네트워크 데이터 설명
-- 2013년 우간다 마유지 구의 빅토리아 호수에 인접한 17개 농촌 마을의 가구 간 인간관계 및 건강 상담 소셜 네트워크.
-- 출처 : 
-- 사용 데이터 : close friends(친구데이터)
-- 노드 : household (139개)
-- 엣지 : relationship (640개)
-- 사용파일 : 6 village
-- 네트워크 형태 : Undirected network, Unweigthed network
-- 데이터 수집 질문 :
- 먼저 성씨(가문 이름)를 말한 다음, 당신과 매우 친한 친구 최대 10명의 이름(이름 중 두 번째 이름)을 말해주세요.
-이 사람은 돈을 지불하지 않고도 당신이 어업이나 농업에 사용하는 도구를 빌릴 수 있을 만큼 편하게 부탁할 수 있는 사람이어야 합니다.
-또한, 가까운 친구란 당신이 자주 만나는 사람을 의미합니다.
-같은 가구(가족 구성원)는 포함하지 마세요.
-가장 친한 사람부터 순서대로 이름을 말해주세요.
-오직 같은 마을에 있는 사람만 이름을 적어주세요.
+### 📌 네트워크 구성
+- **노드** : households (139개)
+- **엣지** : relationship (640개)
+- **네트워크 형태** : Undirected, Unweighted
+- 사용 데이터 : close friends (friendship)
+- 사용 파일 : 6 village
+
+#
+
+### 📌 데이터 질문
+> "당신이 매우 친한 친구 10명을 말해주세요.
+> 같은 마을에 살며, 자주 만나고 도구를 빌려줄 정도로 친밀한 사람. 단, 같은 가족 구성원은 포함하지 마세요."
+
+#
+
+### 📌 네트워크의 개략적인 구조 (Overview)
+
 <img width="851" height="673" alt="image" src="https://github.com/user-attachments/assets/18dbf956-c89c-41ce-80e3-f39307764b07" />
-
-
-## 🎯 (1) 프로젝트 목표
-
-**데이터 기반 분석 :** 실제 네트워크의 **중심성 지표**(Closeness, Betweenness 등) 및 **구조적 특성**(Clustering Coefficient, Diameter 등)을 계산합니다.
-
-**구조적 특이성 검증 :** 원본 네트워크와 네 가지 랜덤 네트워크 모델(**Erdős–Rényi(ER), Configuration, Chung-Lu, Barabási–Albert(BA)**)의 앙상블 평균을 비교하여, 우간다 네트워크의 구조가 **우연히** 발생했는지, 아니면 **특정 메커니즘**으로 형성되었는지 분석합니다.
-
-**코드 모듈화 :** 모든 코드를 일정 형태에서 재사용 가능한 Python 패키지(**`network_tool_pkg`**) 형태로 구현합니다.
+(현실 기반 네트워크로 연결 패턴이 비교적 높은 응집력과 일부 중심 허브 존재하는 구조)
 
 ---
 
-## 📂 (2) 프로젝트 구조 (Package Map)
+# 🎯 프로젝트 목표 🎯
 
-본 프로젝트는 기능적 분리를 위해 **`network_tool_pkg`** 메인 패키지 아래에 
-**`utils`**
-와 **`analysis`** 두 서브 패키지를 가집니다.
+### ✔ 실제 네트워크의 구조적 특성 정량화
+- Degree distribution  
+- Betweenness / Closeness Centrality  
+- Global metrics (Clustering coefficient, Average Path Length, Diameter)
 
-(추후작성)
+#
 
----
+### ✔ 실제 네트워크 vs 랜덤 네트워크 모델 비교
+- 사용 모델
+  - **ER**
+  - **Configuration**
+  - **Chung-Lu**
+  - BA (모델 구현은 되어있으나 본 분석에서는 제외)
+- 다양한 무작위 생성 모델이 원본 네트워크의 구조를 얼마나 재현하는지 평가 및 분석
+  
+#
 
-## 🛠️ (3) 핵심 구현 클래스 및 모델
-
-## A. `CentralityCalculator` (in `centrality_generator.py`)
-
-* **역할:** 그래프 $G$를 인스턴스로 받아, **직접 구현된** 5가지 중심성 지표 값을 계산합니다.
-* **구현 지표:** Degree, Closeness, Harmonic, Betweenness, Eigenvector(Matrix).
-
-## B. `RandomNetGenerator` (in `random_nets_generator.py`)
-
-* **역할:** 입력받은 $N$과 $k$를 기반으로 네 가지 무작위 네트워크 모델을 생성합니다.
-* **구현 모델:**
-    | 모델 | 유형 | 핵심 원리 | 특징 구현 및 예외 처리 방식 |
-    | :--- | :--- | :--- | :--- |
-    | **ER Model** | $G(N, p)$ | 모든 노드 쌍이 확률 p로 독립적 연결 | 확률 p의 유효성 검사 | 
-    | **Configuration** | $G(N, \mathbf{k})$ | 원본 네트워크의 차수 시퀀스를 완벽 보존 | 차수 시퀀스에 대한 검증 |
-    | **Chung-Lu** | $G(N, \mathbf{k})$ | 노드 차수 곱에 비례하여 확률적으로 연결 | 간선 확률 p_ij가 1을 초과하지 않도록 보정 구현 |
-    | **BA Model** | $G(N, m)$ | 성장 및 선호적 연결 메커니즘 | $m$값에 대한 범위 검증 |
+### ✔ 패키지화된 모듈(`network_tool_pkg`) 구축
+- 모든 코드를 일정 형태에서 재사용 가능한 Python 패키지 형태로 구현
 
 ---
 
-## 💡 (4) 환경 설정 및 사용법
+## 📂 프로젝트 구조 📂
 
-### 설치 요구 사항
-```bash
-pip install networkx numpy matplotlib scipy
+본 프로젝트는 기능적 분리를 위해 **`network_tool_pkg`** 메인 패키지 아래에 **`utils`** 와 **`analysis`** 두 서브 패키지를 가집니다.
+
+```
+📁 network_tool_pkg/
+│
+├── 📁 analysis/
+│    ├── 📄 centrality_generator.py      # 중심성 직접 구현 클래스
+│    ├── 📄 random_nets_generator.py     # ER / CF / CL / BA 랜덤 네트워크 생성기
+│
+├── 📁 utils/
+│    ├── 📄 preprocessing.py             # 네트워크 데이터 전처리
+│    ├── 📄 degree_utils.py              # Degree Sequence 생성 및 stub 보정
+│    ├── 📄 average_utils.py             # 앙상블 평균 (NaN 값 안전 처리)
+│    ├── 📄 global_utils.py              # CC, APL, DIAM 계산 및  LCC 진단
+│    ├── 📄 plot_utils.py                # Degree distribution 시각화 함수
+│
+└── data_loader_script.py                # 외부 데이터 파일 로더 (외부 파일 → NetworkX)
 ```
 
-### 패키지 불러오기
-프로젝터 폴더를 클론한 후, 다음과 같이 클래스를 불러와 사용합니다.
-```python
-# analysis_script.py 에서
-from random_nets import RandomNetGenerator 
-import networkx as nx
+---
 
-# 1. 원본 데이터 로드 및 차수 시퀀스 추출
-G_original = nx.karate_club_graph() # 또는 외부 데이터 G를 사용
-degrees = [d for _, d in G_original.degree()]
-N = G_original.number_of_nodes()
+# 🧠 핵심 클래스 설명 🧠
 
-# 2. 클래스 인스턴스 생성
-generator = RandomNetGenerator(N_nodes=N, initial_degrees=degrees)
+###  🟦 `CentralityCalculator`
+직접 구현한 네트워크 중심성 계산 클래스 (centrality_generator.py)
 
-# 3. 모델 생성 (앙상블 생성 루프에 사용)
-G_er_sample = generator.create_er_net(p=0.08)
-G_cm_sample = generator.create_config_model()
+| 중심성 | 설명 |
+|-------|------|
+| Degree | 연결 수 기반 |
+| Closeness | 평균 거리 기반 |
+| Harmonic | 거리 역수 |
+| Betweenness | 최단경로 중개 정도 |
+| Eigenvector | 영향력 기반 고유벡터 |
+
+- networkx 대신 **직접 구현된 중심성 알고리즘**
+- 비연결 네트워크 자동 예외 처리
+- 일부 중심성 계산에서는 연결되지 않은 네트워크 해결을 위해 networkx 내장 함수 사용
+
+#
+
+###  🟥 `RandomNetGenerator`
+네 가지 무작위 네트워크 모델 생성 클래스 (random_nets_generator.py)
+
+| 모델 | 목적 | 구현 특징 |
+|------|------|-----------|
+| ER | 완전 무작위 연결 | p 값 검증, 모든 노드쌍 독립 |
+| Configuration | degree 완전 보존 | stub-shuffle, self-loop 및 multi-edge 방지 |
+| Chung-Lu | 기대 차수 보존 | pij = ki kj / (2m) 조정 |
+| BA | 성장+선호 연결 | m 값 유효성 검사 |
+
+- 본 프로젝트에서는 BA를 미사용 (구현은 되어있음)
+
+---
+
+# 🧰 유틸리티 함수 설명 🧰
+
+### 🔧 `preprocessing.py`
+**✔ `preprocess_network(G)`**
+- 네트워크의 self-loop 제거 및 중복 edge 제거
+- Simple Undirected Network 자동 구성
+  
+#
+
+### 🔧 `degree_utils.py`
+**✔ `create_degree_sequence(G)`** 
+- 네트워크의 degree sequence 생성
+
+**✔ `preprocess_stub(degree_list)`**
+- stub 총합이 홀수인 경우를 최소 수정하여 짝수화
+- Configuration model이 항상 생성 가능하도록 보정
+
+#
+
+### 🔧 `average_utils.py`
+**✔ `ensemble_average(list_of_dicts)`**
+- 랜덤 네트워크 모델의 결과(딕셔너리 리스트)를 key 단위로 평균
+- 모든 등장 key에 대한 평균 수행
+- None 및 NaN 자동 제거
+- 반환값 : `[mean_CC, mean_APL, mean_DIAM]`
+
+#
+
+### 🔧 `global_utils.py`
+**✔ `calculate_global(G)`**
+- 연결 여부 자동 확인
+- 연결되지 않은 네트워크를 LCC 기반으로 APL(평균 경로 길이), 지름(DIAM) 계산
+- 구조 정보 보존을 위해 np.nan 사용
+- 반환값 : `{'CC': value, 'APL': value or np.nan, 'DIAM': value or np.nan}`
+
+**✔ `get_largest_connected_component(G)`**
+- 네트워크에서 가장 큰 연결 구성요소(LCC)를 반환
+
+**✔ `diagnose_lcc_size(G, generator, p)`**
+- 사용된 랜덤 네트워크 모델의 LCC 크기가 원본 대비 너무 작으면 경고 출력
+
+#
+
+### 🔧 `plot_utils.py`
+**✔ `plot_degree_hist(ax, original, model_avg, model_name)`**
+- 원본 vs 랜덤 네트워크 모델 평균의 Degree Distribution을 한 그래프에 표시
+- bar + line 결합형 시각화
+
+**✔ `average_hist(degree_lists, k_max)`**
+- 여러 네트워크의 degree histogram을 평균화
+
+---
+
+# 💡 환경 설정 및 실행 방법 💡
+
+### (1) 필수 패키지 설치
+**로컬(Python 환경)에서 실행 시**
+```
+pip install numpy networkx matplotlib scipy
+```
+**Google Colab에서 실행 시**
+```
+!pip install numpy networkx matplotlib scipy
 ```
 
-추후 수정
+#
+
+### (2) 프로젝트 클론
+**로컬(Python 환경)에서 실행 시**
+```
+git clone https://github.com/username/network_project.git
+cd network_project
+```
+**Google Colab에서 실행 시**
+```
+!git clone https://github.com/username/network_project.git
+%cd network_project
+```
+> ⚠️ GitHub 주소(username/repo)는 실제 저장소로 변경해야 합니다.
+
+#
+
+### (3) Google Drive 데이터 사용(선택)
+**데이터 파일을 Google Drive에 저장한 경우**
+```
+from google.colab import drive
+drive.mount('/content/drive')
+
+FILE_PATH = '/content/drive/MyDrive/data/friendship/6'
+```
+
+#
+
+### (4) 분석 스크립트 실행
+**로컬(Python 환경)에서 실행 시**
+```
+python network_project_script.py
+```
+**Google Colab에서 실행 시**
+```
+!python network_project_script.py
+```
+> ⚠️ 결과물(PDF 파일들)은 /content/network_project/ 폴더에 저장됩니다.
 
 ---
 
-## ✨ (5) 핵심 분석 결과 요약
+# 📊 핵심 분석 결과 📊
 
-추후 작성
+본 프로젝트에서는 우간다 공동체(friendship) 네트워크가  
+**랜덤 네트워크 모델로 설명 가능한지**를 평가하기 위해  
+ER, Configuration, Chung-Lu 모델과 비교 분석하였다.
+
+#
+
+### 🔹 Degree Distribution
+- **ER 모델**은 완전 무작위 분포(Poisson 형태)로, 원본과 매우 다름.
+- **Configuration 모델**은 degree를 그대로 보존하므로 가장 정확함.
+- **Chung-Lu 모델**은 기대 차수 기반으로 Configuration과 유사한 형태 재현.
+
+→ **원본 네트워크는 ER 모델보다 Configuration, Chung-Lu 모델과 구조적으로 더 유사함.**
+
+#
+
+### 🔹 Betweenness & Closeness Centrality
+- 
+- 
+→ 
+
+#
+
+### 🔹 Global Metrics
+- **Clustering Coefficient (CC)** : 
+- **Average Path Length (APL)** : 
+- **Diameter** : 
+→ 
 
 ---
 
+# 🧾 결론 🧾
+
+(⭐️⭐️⭐️⭐️⭐️⭐️수정필요⭐️⭐️⭐️⭐️⭐️⭐️)
+```
+종합하면 우간다 네트워크는…
+
+### ✔ 단순한 무작위 구조(ER)로는 절대 설명되지 않으며  
+### ✔ degree 기반 모델(CF/CL)이 부분적으로는 유사하지만  
+### ✔ 중심성 구조(중앙 허브·중개 노드)는 어떤 랜덤 모델도 재현하지 못한다.
+
+따라서 이 네트워크는  
+**공동체의 사회적 규칙·중심 인물·지역적 구조가 결합된 현실적인 사회 네트워크 형태**이며,  
+단순 확률 모델 이상의 **고차 메커니즘**을 반영한다고 볼 수 있다.
+
+이 패키지는 이러한 구조적 특징을 비교·검증하기 위한  
+**재사용 가능한 네트워크 분석 도구**로 활용할 수 있다.
+```
