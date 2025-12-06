@@ -22,9 +22,17 @@ def ensemble_average(results_list) :
   if not all_keys :
     raise ValueError('[ensemble_average] 유효한 key가 없습니다. 모든 결과가 비어있습니다.')
 
-  # ---------- 리스트 내부의 딕셔너리를 정렬 ----------
-
-  sorted_keys = sorted(all_keys)
+  # ---------- 전역 지표 혹은 중심성 분석에 사용되는지 판단 ----------
+  
+  global_keys = ['CC', 'APL', 'DIAM']
+  
+  # 전역 지표면 순서 강제
+  if set(global_keys).issubset(all_keys):
+    sorted_keys = global_keys
+    
+  # 중심성은 key를 정렬 (노드 번호 순)   
+  else :
+    sorted_keys = sorted(all_keys)
 
   # ----------  Key 값 추출 및 평균 (None 및 NaN 제거) ---------- 
 
