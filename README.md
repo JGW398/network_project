@@ -9,6 +9,7 @@
 
 # Uganda 네트워크 데이터 설명
 - 2013년 우간다 마유지 구의 빅토리아 호수에 인접한 17개 농촌 마을의 가구 간 인간관계 및 건강 상담 소셜 네트워크.
+- 출처 : https://www.repository.cam.ac.uk/items/a9c9afcc-20e0-4466-8b0b-151cfd26f1a2 
 - 사용 데이터 : close friends(친구데이터)
 - 노드 : household (139개)
 - 엣지 : relationship (640개)
