@@ -222,7 +222,7 @@ ax.plot(nodes_sorted, avg_er_btw, label = 'ER', color = 'blue', linewidth = 2, a
 ax.plot(nodes_sorted, avg_cf_btw, label = 'Configuration', color = 'red', linewidth = 2, alpha = 0.7, linestyle='-')
 ax.plot(nodes_sorted, avg_cl_btw, label = 'Chung-Lu', color = 'green', linewidth = 2, alpha = 0.7, linestyle='-')
 
-step = max(1, len(nodes_sorted) // 30)
+step = max(1, len(nodes_sorted) // 15)
 ax.set_xticks(nodes_sorted[::step])
 ax.set_xticklabels(nodes_sorted[::step], rotation = 45)
 ax.tick_params(axis = 'x', labelsize = 8)
@@ -248,7 +248,7 @@ ax.plot(nodes_sorted, avg_er_cls, label = 'ER', color = 'blue', linewidth = 2, a
 ax.plot(nodes_sorted, avg_cf_cls, label = 'Configuration', color = 'red', linewidth = 2, alpha = 0.7, linestyle='-')
 ax.plot(nodes_sorted, avg_cl_cls, label = 'Chung-Lu', color = 'green', linewidth = 2, alpha = 0.7, linestyle='-')
 
-step = max(1, len(nodes_sorted) // 30)
+step = max(1, len(nodes_sorted) // 15)
 ax.set_xticks(nodes_sorted[::step])
 ax.set_xticklabels(nodes_sorted[::step], rotation = 45)
 ax.tick_params(axis = 'x', labelsize = 8)
