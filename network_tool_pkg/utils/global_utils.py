@@ -87,3 +87,43 @@ def diagnose_lcc_size(G_original, generator, ER_P):
         print(f"⚠️ 경고: Chung-Lu LCC({N_chunglu_lcc})가 원본 대비 매우 작습니다. APL/DIAM 값이 비정상일 수 있습니다.")
 
     return N_original_lcc, N_er_lcc, N_config_lcc, N_chunglu_lcc
+
+#네트워크 그래프 기초통계 함수---------------------------------
+def basic_network_stats(G):
+    stats = {}
+
+    # 노드, 엣지 수
+    stats['num_nodes'] = G.number_of_nodes()
+    stats['num_edges'] = G.number_of_edges()
+
+    # 평균 degree
+    degrees = [d for n, d in G.degree()]
+    stats['density_average'] = round(np.mean(degrees),3)
+    stats['degree_max'] = np.max(degrees)
+    stats['degree_min'] = np.min(degrees)
+
+    # 밀도
+    stats['density'] = round(nx.density(G),3)
+
+    # 4. 연결 구성요소
+    stats['num_connected_components'] = nx.number_connected_components(G)
+    components = list(nx.connected_components(G))
+    largest_cc = max(components, key=len)
+
+    stats['largest_cc_size'] = len(largest_cc)
+
+
+    # 평균 경로 길이, 지름
+    largest_subgraph = G.subgraph(largest_cc)
+
+    if nx.is_connected(largest_subgraph):
+        stats['average_shortest_path_length'] = round(nx.average_shortest_path_length(largest_subgraph),3)
+        stats['diameter'] = nx.diameter(largest_subgraph)
+    else:
+        stats['avg_shortest_path_length'] = None
+        stats['diameter'] = None
+
+    # 클러스터링 계수
+    stats['avg_clustering'] = round(nx.average_clustering(G),3)
+
+    return stats  
