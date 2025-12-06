@@ -30,7 +30,7 @@ FILE_PATH = '/content/drive/MyDrive/data/friendship/6'
 G_original = load_network_from_file(FILE_PATH)
 
 # 테스트 및 예시를 위해 karate club network의 데이터를 G_original에 할당 (미사용 시 주석 설정)
-G_original = nx.karate_club_graph()
+# G_original = nx.karate_club_graph()
 
 # ---------- 데이터 전처리 실행 ----------
 
