@@ -218,12 +218,12 @@ print('----- Degree Histogram 시각화가 완료되었습니다 -----')
 
 fig, ax = plt.subplots(figsize = (9, 5))
 
-ax.plot(nodes_sorted, original_btw_sorted, label = 'Original', color = 'black', linewidth = 2.5, linestyle='-')
-ax.plot(nodes_sorted, avg_er_btw, label = 'ER', color = 'blue', linewidth = 2, alpha = 0.75, linestyle='-')
-ax.plot(nodes_sorted, avg_cf_btw, label = 'Configuration', color = 'red', linewidth = 2, alpha = 0.75, linestyle='-')
-ax.plot(nodes_sorted, avg_cl_btw, label = 'Chung-Lu', color = 'green', linewidth = 2, alpha = 0.75, linestyle='-')
+ax.plot(nodes_sorted, original_btw_sorted, label = 'Original', color = 'grey', linewidth = 3, linestyle='-')
+ax.plot(nodes_sorted, avg_er_btw, label = 'ER', color = 'blue', linewidth = 2, alpha = 0.7, linestyle='-')
+ax.plot(nodes_sorted, avg_cf_btw, label = 'Configuration', color = 'red', linewidth = 2, alpha = 0.7, linestyle='-')
+ax.plot(nodes_sorted, avg_cl_btw, label = 'Chung-Lu', color = 'green', linewidth = 2, alpha = 0.7, linestyle='-')
 
-step = max(1, len(nodes_sorted) // 4)
+step = max(1, len(nodes_sorted) // 30)
 ax.set_xticks(nodes_sorted[::step])
 ax.set_xticklabels(nodes_sorted[::step], rotation = 45)
 ax.tick_params(axis = 'x', labelsize = 8)
@@ -233,7 +233,6 @@ ax.set_xlabel('Node ID')
 ax.set_ylabel('Betweenness Centrality')
 ax.legend()
 ax.grid(alpha = 0.4)
-
 
 plt.tight_layout()
 plt.savefig('Betweenness_compare.pdf', bbox_inches = 'tight')
@@ -245,12 +244,12 @@ print('----- Betweenness Centrality 시각화가 완료되었습니다 -----')
 
 fig, ax = plt.subplots(figsize = (9, 5))
 
-ax.plot(nodes_sorted, original_cls_sorted, label = 'Original', color = 'black', linewidth = 2.5, linestyle='-')
-ax.plot(nodes_sorted, avg_er_cls, label = 'ER', color = 'blue', linewidth = 2, alpha = 0.75, linestyle='-')
-ax.plot(nodes_sorted, avg_cf_cls, label = 'Configuration', color = 'red', linewidth = 2, alpha = 0.75, linestyle='-')
-ax.plot(nodes_sorted, avg_cl_cls, label = 'Chung-Lu', color = 'green', linewidth = 2, alpha = 0.75, linestyle='-')
+ax.plot(nodes_sorted, original_cls_sorted, label = 'Original', color = 'grey', linewidth = 3, linestyle='-')
+ax.plot(nodes_sorted, avg_er_cls, label = 'ER', color = 'blue', linewidth = 2, alpha = 0.7, linestyle='-')
+ax.plot(nodes_sorted, avg_cf_cls, label = 'Configuration', color = 'red', linewidth = 2, alpha = 0.7, linestyle='-')
+ax.plot(nodes_sorted, avg_cl_cls, label = 'Chung-Lu', color = 'green', linewidth = 2, alpha = 0.7, linestyle='-')
 
-step = max(1, len(nodes_sorted) // 4)
+step = max(1, len(nodes_sorted) // 30)
 ax.set_xticks(nodes_sorted[::step])
 ax.set_xticklabels(nodes_sorted[::step], rotation = 45)
 ax.tick_params(axis = 'x', labelsize = 8)
@@ -260,7 +259,6 @@ ax.set_xlabel('Node ID')
 ax.set_ylabel('Closeness Centrality')
 ax.legend()
 ax.grid(alpha = 0.4)
-
 
 plt.tight_layout()
 plt.savefig('Closeness_compare.pdf', bbox_inches = 'tight')
