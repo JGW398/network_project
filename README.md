@@ -17,7 +17,9 @@
 
 #
 
-본 프로젝트에서는 BA 랜덤 네트워크 모델을 제외한 나머지 세 모델을 이용합니다. 모델별 앙상블 평균을 기반으로 **Degree 분포**, **Centrality 분포**, Global metrics(**클러스터링 계수, 평균 경로 길이, 지름**)를 분석합니다. 또, 랜덤 모델 생성 함수를 포함한 네트워크 전처리, 중심성 계산 등의 기능은 Python 클래스 형태로 관리됩니다.
+본 프로젝트에서는 BA 랜덤 네트워크 모델을 제외한 나머지 세 모델을 이용합니다. 
+모델별 앙상블 평균을 기반으로 **Degree 분포**, **Centrality 분포**, Global metrics(**클러스터링 계수, 평균 경로 길이, 지름**)를 분석합니다. 
+또, 랜덤 모델 생성 함수를 포함한 네트워크 전처리, 중심성 계산 등의 기능은 Python 클래스 형태로 관리됩니다.
 
 ---
 
@@ -61,6 +63,7 @@ https://www.repository.cam.ac.uk/items/a9c9afcc-20e0-4466-8b0b-151cfd26f1a2
 ### 📌 네트워크의 개략적인 구조 (Overview)
 
 <img width="851" height="673" alt="image" src="https://github.com/user-attachments/assets/18dbf956-c89c-41ce-80e3-f39307764b07" />
+
 (현실 기반 네트워크로 연결 패턴이 비교적 높은 응집력과 일부 중심 허브 존재하는 구조)
 
 ---
@@ -89,7 +92,7 @@ https://www.repository.cam.ac.uk/items/a9c9afcc-20e0-4466-8b0b-151cfd26f1a2
 
 ---
 
-## 📂 프로젝트 구조 📂
+# 📂 프로젝트 구조 📂
 
 본 프로젝트는 기능적 분리를 위해 **`network_tool_pkg`** 메인 패키지 아래에 **`utils`** 와 **`analysis`** 두 서브 패키지를 가집니다.
 
