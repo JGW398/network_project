@@ -331,7 +331,7 @@ ER, Configuration, Chung-Lu 모델과 비교 분석하였다.
 - ER 모델은 원본 네트워크를 비현실적으로 조밀하게 만들어 (Diameter $\approx 4.11$) 구조를 왜곡
 ### ✔ degree 기반 모델의 한계 (CF/CL)
 - Configuration, Chung-Lu 모델은 차수 분포 및 **최대 크기(Diameter $\approx 5.0$ )**를 성공적으로 모방
-- 그러나 Betweenness, Closeness Centrality 분포 비교에서, 이 모델들은 원본 네트워크의 중개노드, 중앙허브를 재현하지 못하고 $C_B \approx 0$에 집중됨
+- 그러나 Betweenness, Closeness Centrality 분포 비교에서, 이 모델들은 원본 네트워크의 중개노드, 중앙허브를 확실하게 재현하지 못하고 $C_B \approx 0$에 집중됨
 
 ### 🔍구조적 특징
 - 강한 지역적 뭉침: 무작위 모델보다 높은 클러스터링 계수 ($\approx 0.15$)를 가짐.
