@@ -22,14 +22,14 @@
 ---
 
 # 📄 목차 📄
-### 1. [데이터 설명](#-데이터-설명)
-### 2. [프로젝트 목표](#-프로젝트-목표)
-### 3. [프로젝트 구조](#-프로젝트-구조)
-### 4. [핵심 클래스 설명](#-핵심-클래스-설명)
-### 5. [유틸리티 함수 설명](#-유틸리티-함수-설명)
-### 6. [환경 설정 및 실행 방법](#-환경-설정-및-실행-방법)
-### 7. [핵심 분석 결과](#-핵심-분석-결과)
-### 8. [결론](#-결론)
+1. [데이터 설명](#-데이터-설명)
+2. [프로젝트 목표](#-프로젝트-목표)
+3. [프로젝트 구조](#-프로젝트-구조)
+4. [핵심 클래스 설명](#-핵심-클래스-설명)
+5. [유틸리티 함수 설명](#-유틸리티-함수-설명)
+6. [환경 설정 및 실행 방법](#-환경-설정-및-실행-방법)
+7. [핵심 분석 결과](#-핵심-분석-결과)
+8. [결론](#-결론)
 
 
 ---
@@ -215,15 +215,14 @@ pip install numpy networkx matplotlib scipy
 ### (2) 프로젝트 클론
 **로컬(Python 환경)에서 실행 시**
 ```
-git clone https://github.com/username/network_project.git
+git clone https://github.com/niceholholl/network_project.git
 cd network_project
 ```
 **Google Colab에서 실행 시**
 ```
-!git clone https://github.com/username/network_project.git
+!git clone https://github.com/niceholholl/network_project.git
 %cd network_project
 ```
-> ⚠️ GitHub 주소(username/repo)는 실제 저장소로 변경해야 합니다.
 
 #
 
